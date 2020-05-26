@@ -1,3 +1,5 @@
+import os
+import json
 import rumps
 
 
@@ -8,7 +10,9 @@ class DrinkMoreWaterApp(rumps.App):
             'Remind Me',
             "Settings",
         ]
-        self.config = {"interval": 5}
+        self.config = {
+            "interval": 5,
+        }
         self.timer = rumps.Timer(self.remind, self.config['interval'])
 
     def remind(self, _):
@@ -47,12 +51,19 @@ class DrinkMoreWaterApp(rumps.App):
             try:
                 new_interval = int(response.text)
                 self.config['interval'] = new_interval
+                self.save_config()
             except:
                 rumps.alert(
                     title='Incorrect input',
                     message='Input must be a number',
                 )
                 self.prefs(self)  # Reopen settings window
+
+    def save_config(self):
+        filename = 'config.json'
+        filepath = os.path.join(rumps.application_support(self.name), filename)
+        with open(filepath, mode='w') as config_file:
+            json.dump(self.config, config_file)
 
 
 if __name__ == "__main__":
