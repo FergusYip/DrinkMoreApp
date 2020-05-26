@@ -1,8 +1,9 @@
 from setuptools import setup
 
-APP = ['example_class.py']
-DATA_FILES = []
+APP = ['app.py']
+DATA_FILES = ['menu_icon.ico']
 OPTIONS = {
+    'iconfile': 'app_icon.icns',
     'argv_emulation': True,
     'plist': {
         'LSUIElement': True,

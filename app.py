@@ -8,7 +8,7 @@ import rumps
 class DrinkMoreApp(rumps.App):
     def __init__(self):
         super(DrinkMoreApp, self).__init__("DrinkMore")
-        self.icon = '/Users/fergus/Projects/drink-water-app/dropletofwater_83794.ico'
+        self.icon = 'menu_icon.ico'
         self.template = True
         self.menu = [
             'Remind Me',
