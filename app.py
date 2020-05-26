@@ -10,9 +10,11 @@ class DrinkMoreWaterApp(rumps.App):
             'Remind Me',
             "Settings",
         ]
-        self.config = {
-            "interval": 5,
+        self.config_filename = 'config.json'
+        self.default_config = {
+            "interval": 7200,
         }
+        self.config = self.read_config()
         self.timer = rumps.Timer(self.remind, self.config['interval'])
 
     def remind(self, _):
@@ -60,10 +62,17 @@ class DrinkMoreWaterApp(rumps.App):
                 self.prefs(self)  # Reopen settings window
 
     def save_config(self):
-        filename = 'config.json'
+        filename = self.config_filename
         filepath = os.path.join(rumps.application_support(self.name), filename)
         with open(filepath, mode='w') as config_file:
             json.dump(self.config, config_file)
+
+    def read_config(self):
+        filename = self.config_filename
+        filepath = os.path.join(rumps.application_support(self.name), filename)
+        with open(filepath, mode='r') as config_file:
+            return json.load(config_file)
+        return self.default_config
 
 
 if __name__ == "__main__":
