@@ -46,17 +46,21 @@ class DrinkMoreApp(rumps.App):
                         message='')
             return
 
-        interval = self.config['interval']
-        response = rumps.Window(message='',
-                                title='Enter reminder frequency in seconds',
-                                default_text=f'{interval}',
-                                ok='Apply',
-                                cancel='Cancel').run()
+        interval = int(self.config['interval'] / 60)
+        settings_window = rumps.Window(
+            message='',
+            title='Enter reminder frequency in minutes',
+            default_text=f'{interval}',
+            ok='Apply',
+            cancel='Cancel',
+            dimensions=(250, 20),
+        )
+        response = settings_window.run()
 
         if response.clicked:
             try:
                 new_interval = int(response.text)
-                self.config['interval'] = new_interval
+                self.config['interval'] = new_interval * 60
                 self.save_config()
             except:
                 rumps.alert(
