@@ -5,9 +5,9 @@ import rumps
 # https://icon-icons.com/icon/droplet-of-water/83794
 
 
-class DrinkMoreWaterApp(rumps.App):
+class DrinkMoreApp(rumps.App):
     def __init__(self):
-        super(DrinkMoreWaterApp, self).__init__("DrinkMore")
+        super(DrinkMoreApp, self).__init__("DrinkMore")
         self.icon = '/Users/fergus/Projects/drink-water-app/dropletofwater_83794.ico'
         self.template = True
         self.menu = [
@@ -82,4 +82,4 @@ class DrinkMoreWaterApp(rumps.App):
 
 
 if __name__ == "__main__":
-    DrinkMoreWaterApp().run()
+    DrinkMoreApp().run()
