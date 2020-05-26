@@ -2,10 +2,14 @@ import os
 import json
 import rumps
 
+# https://icon-icons.com/icon/droplet-of-water/83794
+
 
 class DrinkMoreWaterApp(rumps.App):
     def __init__(self):
-        super(DrinkMoreWaterApp, self).__init__("🚰")
+        super(DrinkMoreWaterApp, self).__init__("DrinkMore")
+        self.icon = '/Users/fergus/Projects/drink-water-app/dropletofwater_83794.ico'
+        self.template = True
         self.menu = [
             'Remind Me',
             "Settings",
@@ -70,9 +74,11 @@ class DrinkMoreWaterApp(rumps.App):
     def read_config(self):
         filename = self.config_filename
         filepath = os.path.join(rumps.application_support(self.name), filename)
-        with open(filepath, mode='r') as config_file:
-            return json.load(config_file)
-        return self.default_config
+        try:
+            with open(filepath, mode='r') as config_file:
+                return json.load(config_file)
+        except:
+            return self.default_config
 
 
 if __name__ == "__main__":
