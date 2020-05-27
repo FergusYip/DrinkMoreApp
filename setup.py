@@ -7,6 +7,8 @@ OPTIONS = {
     'argv_emulation': True,
     'plist': {
         'LSUIElement': True,
+        'NSHumanReadableCopyright': 'Copyright (c) 2020 Wai Lam Fergus Yip',
+        'CFBundleVersion': '1.0.0'
     },
     'packages': ['rumps'],
 }
