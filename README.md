@@ -2,8 +2,11 @@
 
 DrinkMore is a Python 3 app for Mac to remind you to drink more water. When it's open you can choose whether or not to be reminded and change the frequency of which you would like to be reminded.
 
-![alt text][menubar_expand]
-![alt text][notification]
+<div align="center">
+  <img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/imgs/menubar_expand.png" width=400/>
+  <br/> 
+  <img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/imgs/notification.png" width=400/>
+</div>
 
 # Running the app
 
