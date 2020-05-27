@@ -1,9 +1,11 @@
 # DrinkMore
-DrinkMore is a Python 3 app for Mac to remind you to drink more water. When it's open you can choose whether or not to be reminded and change the frequency of which you would like to be reminded. 
+
+DrinkMore is a Python 3 app for Mac to remind you to drink more water. When it's open you can choose whether or not to be reminded and change the frequency of which you would like to be reminded.
 
 # Running the app
 
 ## Precompiled
+
 Download the latest precompiled version of the app - here
 
 ## Compile it yourself
@@ -15,7 +17,7 @@ Install requirements
 Build app
 
 `python setup.py py2app`
-  
+
 The compiled app will be found in the `dist` folder
 
 ## Run without compiling
@@ -40,5 +42,4 @@ Note that the settings window will not display the app icon and it is the python
 
 Developed by Fergus Yip, 2020
 
-[Droplet, of, water Free Icon](https://icon-icons.com/icon/droplet-of-water/83794) by [Daniel Bruce](www.danielbruce.se) reused under the [CC BY License](https://creativecommons.org/licenses/by/4.0/). Modifications to the color and the addition of an outline and drop shadow have been made.
-
+[Droplet, of, water Free Icon](https://icon-icons.com/icon/droplet-of-water/83794) by [Daniel Bruce](www.danielbruce.se), reused under the [CC BY License](https://creativecommons.org/licenses/by/4.0/). Modifications to the color and the addition of an outline and drop shadow have been made.
