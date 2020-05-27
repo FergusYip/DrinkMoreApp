@@ -27,4 +27,5 @@ setup(
     options={'py2app': OPTIONS},
     setup_requires=['py2app'],
     install_requires=['rumps'],
+    classifiers=["License :: OSI Approved :: MIT License"],
 )
