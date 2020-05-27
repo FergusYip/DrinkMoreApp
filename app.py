@@ -53,15 +53,16 @@ class DrinkMoreApp(rumps.App):
     def prefs(self, _):
         ''' Settings window '''
         if self.timer.is_alive():
-            rumps.alert(title='Disable reminders before changing settings',
-                        message='')
+            rumps.alert(
+                title='Please disable reminders before changing settings.',
+                message='')
             return
 
-        interval = int(self.config['interval'] / 60)
+        current_interval = int(self.config['interval'] / 60)
         settings_window = rumps.Window(
             message='',
-            title='Enter reminder frequency in minutes',
-            default_text=f'{interval}',
+            title='Enter reminder frequency in minutes:',
+            default_text=f'{current_interval}',
             ok='Apply',
             cancel='Cancel',
             dimensions=(250, 20),
@@ -69,16 +70,29 @@ class DrinkMoreApp(rumps.App):
         response = settings_window.run()
 
         if response.clicked:
+            minutes = current_interval
             try:
-                new_interval = int(int(response.text) * 60)
-                self.config['interval'] = new_interval
-                self.save_config()
+                minutes = int(response.text)
             except:
                 rumps.alert(
                     title='Incorrect input',
-                    message='Input must be a number',
+                    message='Input must be a number.',
                 )
                 self.prefs(self)  # Reopen settings window
+
+            if minutes < 1:
+                rumps.alert(title='Incorrect input',
+                            message=f'Input cannot be less than 1.')
+                self.prefs(self)  # Reopen settings window
+            else:
+                new_interval = int(minutes * 60)
+                self.config['interval'] = new_interval
+                self.save_config()
+                rumps.alert(
+                    title='Success!',
+                    message=
+                    f'Reminder frequency has been changed to {minutes} minutes.'
+                )
 
     def save_config(self):
         ''' Save the config to a JSON file in the application support folder '''
