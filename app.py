@@ -68,9 +68,20 @@ class DrinkMoreApp(rumps.App):
             cancel='Cancel',
             dimensions=(250, 20),
         )
+        settings_window.add_button('Reset')  # Button index 2
         response = settings_window.run()
 
-        if response.clicked:
+        if response.clicked == 2:  # reset
+            self.config['interval'] = self.default_config['interval']
+            minutes = int(self.default_config['interval'] / 60)
+            self.save_config()
+            rumps.alert(
+                title='Settings have been reset',
+                message=
+                f'Reminder frequency has been changed to {minutes} minutes.')
+            return
+
+        if response.clicked == 1:  # ok
             minutes = current_interval
             try:
                 minutes = int(response.text)
