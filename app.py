@@ -8,7 +8,7 @@ import rumps
 class DrinkMoreApp(rumps.App):
     ''' DrinkMoreApp '''
     def __init__(self):
-        super(DrinkMoreApp, self).__init__("DrinkMore")
+        super(DrinkMoreApp, self).__init__('DrinkMore')
         self.icon = 'menu_icon.ico'
         self.template = True
 
@@ -21,25 +21,31 @@ class DrinkMoreApp(rumps.App):
         self.config = self.read_config()
 
         self.timer = rumps.Timer(self.remind, self.config['interval'])
+        self.reminding = False
 
     def remind(self, _):
         ''' Send a notification to the user reminding them to drink water'''
-        rumps.notification(title='It\'s time to drink a cup of water',
-                           subtitle='Just a friendly reminder',
-                           message='')
+        if self.reminding is False:
+            self.reminding = True
+        else:
+            print('Sending reminder')
+            rumps.notification(title='It\'s time to drink a cup of water',
+                               subtitle='Just a friendly reminder',
+                               message='')
 
     @rumps.clicked('Remind Me')
     def toggle(self, sender):
         ''' Toggle reminders '''
         if sender.state == 0:
-            print("Switched on")
+            print('Switched on')
             self.timer.start()
         else:
-            print("Switched off")
+            print('Switched off')
+            self.reminding = False
             self.timer.stop()
         sender.state = self.timer.is_alive()
 
-    @rumps.clicked("Settings")
+    @rumps.clicked('Settings')
     def settings(self, _):
         ''' Open the settings window '''
         self.prefs(self)
@@ -92,5 +98,5 @@ class DrinkMoreApp(rumps.App):
             return self.default_config
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     DrinkMoreApp().run()
