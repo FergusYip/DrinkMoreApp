@@ -15,6 +15,7 @@ class DrinkMoreApp(rumps.App):
         self.menu.add(rumps.MenuItem(title='Remind Me'))
         self.menu.add(rumps.MenuItem(title='Settings'))
         self.menu.add(rumps.separator)
+        self.menu.add(rumps.MenuItem(title='About'))
 
         self.config_filename = 'config.json'
         self.default_config = {"interval": 7200}
@@ -93,6 +94,15 @@ class DrinkMoreApp(rumps.App):
                     message=
                     f'Reminder frequency has been changed to {minutes} minutes.'
                 )
+
+    @rumps.clicked('About')
+    def about(self, _):
+        rumps.alert(
+            title='About',
+            message=(
+                'Developed by Wai Lam Fergus Yip.\n'
+                'Icon by Daniel Bruce, reused under the CC BY License.\n\n'
+                'https://github.com/FergusYip/DrinkMoreApp'))
 
     def save_config(self):
         ''' Save the config to a JSON file in the application support folder '''
