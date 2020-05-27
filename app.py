@@ -88,9 +88,10 @@ class DrinkMoreApp(rumps.App):
             except:
                 rumps.alert(
                     title='Incorrect input',
-                    message='Input must be a number.',
+                    message='Input must be an integer.',
                 )
                 self.prefs(self)  # Reopen settings window
+                return
 
             if minutes < 1:
                 rumps.alert(title='Incorrect input',
