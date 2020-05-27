@@ -39,7 +39,7 @@ Run the app
 
 `python3 app.py`
 
-Note that the settings window will not display the app icon and it is the python interpreter that is running the application.
+Note that the settings window will not display the app icon as it is the python interpreter that is running the application.
 
 # Dependencies
 
