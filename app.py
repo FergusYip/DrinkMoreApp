@@ -31,6 +31,8 @@ class DrinkMoreApp(rumps.App):
             self.timer.start()
             remindme.state = 1
 
+        self.save_config()
+
     def remind(self, _):
         ''' Send a notification to the user reminding them to drink water'''
         if self.reminding is False:
@@ -151,7 +153,12 @@ class DrinkMoreApp(rumps.App):
         try:
             with open(filepath, mode='r') as config_file:
                 print('Loading USER config')
-                return json.load(config_file)
+                config = json.load(config_file)
+                if config.keys() != self.default_config.keys():
+                    rumps.alert(title='Error when loading config',
+                                message='Default settings have been applied')
+                    return self.default_config
+                return config
         except:
             print('Loading DEFAULT config')
             return self.default_config
