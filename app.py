@@ -1,9 +1,8 @@
 ''' DrinkMore is a MacOS menu bar app to remind you to drink more water '''
+
 import os
 import json
 import rumps
-
-# https://icon-icons.com/icon/droplet-of-water/83794
 
 
 class DrinkMoreApp(rumps.App):
@@ -12,15 +11,15 @@ class DrinkMoreApp(rumps.App):
         super(DrinkMoreApp, self).__init__("DrinkMore")
         self.icon = 'menu_icon.ico'
         self.template = True
-        self.menu = [
-            'Remind Me',
-            'Settings',
-        ]
+
+        self.menu.add(rumps.MenuItem(title='Remind Me'))
+        self.menu.add(rumps.MenuItem(title='Settings'))
+        self.menu.add(rumps.separator)
+
         self.config_filename = 'config.json'
-        self.default_config = {
-            "interval": 7200,
-        }
+        self.default_config = {"interval": 7200}
         self.config = self.read_config()
+
         self.timer = rumps.Timer(self.remind, self.config['interval'])
 
     def remind(self, _):
@@ -32,7 +31,7 @@ class DrinkMoreApp(rumps.App):
     @rumps.clicked('Remind Me')
     def toggle(self, sender):
         ''' Toggle reminders '''
-        if sender.state is False:
+        if sender.state == 0:
             print("Switched on")
             self.timer.start()
         else:
