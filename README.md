@@ -6,7 +6,7 @@ DrinkMore is a Python 3 app for Mac to remind you to drink more water. When it's
 
 ## Precompiled
 
-Download the latest precompiled version of the app - here
+Download the latest precompiled version of the app - [here](https://github.com/FergusYip/DrinkMoreApp/releases)
 
 ## Compile it yourself
 
