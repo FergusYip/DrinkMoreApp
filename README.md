@@ -40,5 +40,5 @@ Note that the settings window will not display the app icon and it is the python
 
 Developed by Fergus Yip, 2020
 
-Icon: 
+[Droplet, of, water Free Icon](https://icon-icons.com/icon/droplet-of-water/83794) by [Daniel Bruce](www.danielbruce.se) reused under the [CC BY License](https://creativecommons.org/licenses/by/4.0/). Modifications to the color and the addition of an outline and drop shadow have been made.
 
