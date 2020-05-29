@@ -3,6 +3,7 @@
 import os
 import json
 import rumps
+from datetime import datetime
 
 
 class DrinkMoreApp(rumps.App):
@@ -38,7 +39,7 @@ class DrinkMoreApp(rumps.App):
         if self.reminding is False:
             self.reminding = True
         else:
-            print('Sending reminder')
+            print(f'{datetime.now().strftime("%H:%M:%S")} Sending reminder')
             rumps.notification(title='It\'s time to drink a cup of water',
                                subtitle='Just a friendly reminder',
                                message='')
@@ -58,19 +59,24 @@ class DrinkMoreApp(rumps.App):
         sender.state = int(self.timer.is_alive())
         self.save_config()
 
+    def restart_timer(self):
+        ''' Refresh and restart the timer '''
+        print(f'{datetime.now().strftime("%H:%M:%S")} Restarting timer')
+        if self.timer.is_alive():
+            self.timer.stop()
+
+        self.reminding = False
+        self.timer.interval = self.config['interval']
+        self.timer.start()
+
     @rumps.clicked('Settings')
     def settings(self, _):
         ''' Open the settings window '''
+        print('Clicked \"Settings\" button')
         self.prefs(self)
 
     def prefs(self, _):
         ''' Settings window '''
-        if self.timer.is_alive():
-            print('ERROR: Reminders are still active')
-            rumps.alert(
-                title='Please disable reminders before changing settings.',
-                message='')
-            return
 
         print('Opened settings window')
 
@@ -87,17 +93,10 @@ class DrinkMoreApp(rumps.App):
         response = settings_window.run()
 
         if response.clicked == 2:  # reset
-            self.config = self.default_config
-            minutes = int(self.config['interval'] / 60)
             print('Reset Settings')
-            self.save_config()
-            rumps.alert(
-                title='Settings have been reset',
-                message=
-                f'Reminder frequency has been changed to {minutes} minutes.')
-            return
+            self.config = self.default_config
 
-        if response.clicked == 1:  # ok
+        elif response.clicked == 1:  # ok
 
             if not response.text.isdecimal():
                 print('ERROR: New interval is not integer')
@@ -116,16 +115,19 @@ class DrinkMoreApp(rumps.App):
                 self.prefs(self)  # Reopen settings window
                 return
 
-            print(f'Successfully changed interval to {minutes} minutes')
-
             seconds = int(minutes * 60)
             self.config['interval'] = seconds
-            self.save_config()
 
-            rumps.alert(
-                title='Success!',
-                message=
-                f'Reminder frequency has been changed to {minutes} minutes.')
+        minutes = int(self.config['interval'] / 60)
+
+        print(f'Successfully changed interval to {minutes} minutes')
+
+        self.save_config()
+        rumps.alert(
+            title='Success!',
+            message=f'Reminder frequency has been changed to {minutes} minutes.'
+        )
+        self.restart_timer()
 
     @rumps.clicked('About')
     def about(self, _):
