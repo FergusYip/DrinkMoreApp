@@ -2,14 +2,20 @@
 
 import os
 import json
+import logging
+import datetime
 import rumps
-from datetime import datetime
 
 
 class DrinkMoreApp(rumps.App):
     ''' DrinkMoreApp '''
     def __init__(self):
         super(DrinkMoreApp, self).__init__('DrinkMore')
+
+        self.logger = self.logger_init()
+
+        self.logger.info('Starting application...')
+
         self.icon = 'menu_icon.ico'
         self.template = True
 
@@ -28,7 +34,7 @@ class DrinkMoreApp(rumps.App):
         self.reminding = False
 
         if self.config['reminding'] is True and not self.timer.is_alive():
-            print('Timer started (config specified)')
+            self.logger.info('Timer started (config specified)')
             self.timer.start()
             remindme.state = 1
 
@@ -36,10 +42,12 @@ class DrinkMoreApp(rumps.App):
 
     def remind(self, _):
         ''' Send a notification to the user reminding them to drink water'''
+        self.logger.info('Ran timer function')
         if self.reminding is False:
+            self.logger.info('Omitting first reminder')
             self.reminding = True
         else:
-            print(f'{datetime.now().strftime("%H:%M:%S")} Sending reminder')
+            self.logger.info('Sending reminder')
             rumps.notification(title='It\'s time to drink a cup of water',
                                subtitle='Just a friendly reminder',
                                message='')
@@ -48,37 +56,44 @@ class DrinkMoreApp(rumps.App):
     def toggle(self, sender):
         ''' Toggle reminders '''
         if sender.state == 0:
-            print('Switched ON')
+            self.logger.info('Enabled reminders')
             self.reminding = False
             self.config['reminding'] = True
             self.timer.start()
         else:
-            print('Switched OFF')
+            self.logger.info('Disabled reminders')
             self.config['reminding'] = False
             self.timer.stop()
         sender.state = int(self.timer.is_alive())
         self.save_config()
 
-    def restart_timer(self):
-        ''' Refresh and restart the timer '''
-        print(f'{datetime.now().strftime("%H:%M:%S")} Restarting timer')
-        if self.timer.is_alive():
-            self.timer.stop()
+    def refresh_timer(self):
+        ''' Refresh the timer '''
+        self.logger.info(f'Refreshing timer')
 
-        self.reminding = False
-        self.timer.interval = self.config['interval']
-        self.timer.start()
+        if self.timer.is_alive():
+            self.logger.info(f'Stopping timer')
+
+            self.timer.stop()
+            self.reminding = False
+            self.timer.interval = self.config['interval']
+
+            self.logger.info(f'Restarting timer')
+            self.timer.start()  # restart timer
+
+        else:
+            self.timer.interval = self.config['interval']
 
     @rumps.clicked('Settings')
     def settings(self, _):
         ''' Open the settings window '''
-        print('Clicked \"Settings\" button')
+        self.logger.info('Clicked \"Settings\" button')
         self.prefs(self)
 
     def prefs(self, _):
         ''' Settings window '''
 
-        print('Opened settings window')
+        self.logger.info('Opened settings window')
 
         current_interval = int(self.config['interval'] / 60)
         settings_window = rumps.Window(
@@ -93,13 +108,13 @@ class DrinkMoreApp(rumps.App):
         response = settings_window.run()
 
         if response.clicked == 2:  # reset
-            print('Reset Settings')
+            self.logger.info('Reset Settings')
             self.config = self.default_config
 
         elif response.clicked == 1:  # ok
 
             if not response.text.isdecimal():
-                print('ERROR: New interval is not integer')
+                self.logger.error('New interval is not integer')
                 rumps.alert(
                     title='Incorrect input',
                     message='Input must be an integer.',
@@ -110,6 +125,7 @@ class DrinkMoreApp(rumps.App):
             minutes = int(response.text)
 
             if minutes < 1:
+                self.logger.error('New interval is less than 1')
                 rumps.alert(title='Incorrect input',
                             message=f'Input cannot be less than 1.')
                 self.prefs(self)  # Reopen settings window
@@ -120,18 +136,18 @@ class DrinkMoreApp(rumps.App):
 
         minutes = int(self.config['interval'] / 60)
 
-        print(f'Successfully changed interval to {minutes} minutes')
+        self.logger.info(f'Interval changed to {minutes} minutes')
 
         self.save_config()
         rumps.alert(
             title='Success!',
             message=f'Reminder frequency has been changed to {minutes} minutes.'
         )
-        self.restart_timer()
+        self.refresh_timer()
 
     @rumps.clicked('About')
     def about(self, _):
-        print('Opened about window')
+        self.logger.info('Opened about window')
 
         rumps.alert(
             title='About',
@@ -145,7 +161,7 @@ class DrinkMoreApp(rumps.App):
         filename = self.config_filename
         filepath = os.path.join(rumps.application_support(self.name), filename)
         with open(filepath, mode='w') as config_file:
-            print('Saving config')
+            self.logger.info('Saving config')
             json.dump(self.config, config_file)
 
     def read_config(self):
@@ -154,7 +170,7 @@ class DrinkMoreApp(rumps.App):
         filepath = os.path.join(rumps.application_support(self.name), filename)
         try:
             with open(filepath, mode='r') as config_file:
-                print('Loading USER config')
+                self.logger.info('Loading USER config')
                 config = json.load(config_file)
                 if config.keys() != self.default_config.keys():
                     rumps.alert(title='Error when loading config',
@@ -162,8 +178,28 @@ class DrinkMoreApp(rumps.App):
                     return self.default_config
                 return config
         except:
-            print('Loading DEFAULT config')
+            self.logger.exception('Loading DEFAULT config')
             return self.default_config
+
+    def logger_init(self):
+        logger = logging.getLogger('DrinkMore')
+        logger.setLevel(logging.INFO)
+
+        formatter = logging.Formatter(
+            '%(asctime)s - %(levelname)s - %(message)s')
+
+        steam_handler = logging.StreamHandler()
+        steam_handler.setFormatter(formatter)
+        logger.addHandler(steam_handler)
+
+        filename = f'DrinkMore.log'
+        filepath = os.path.join(rumps.application_support(self.name), filename)
+
+        file_handler = logging.FileHandler(filepath, mode='w')
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
+        return logger
 
 
 if __name__ == '__main__':
