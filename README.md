@@ -23,19 +23,27 @@ Note: If you are running MacOS 10.15 or later, it will display a [popup](https:/
 
 Clone the repository
 
-`git clone https://github.com/FergusYip/DrinkMoreApp.git`
+```sh
+git clone https://github.com/FergusYip/DrinkMoreApp.git
+```
 
 Enter the directory
 
-`cd DrinkMoreApp`
+```sh
+cd DrinkMoreApp
+```
 
 Install requirements
 
-`pip3 install -r requirements.txt`
+```sh
+pip3 install -r requirements.txt
+```
 
 Bundle app
 
-`python setup.py py2app`
+```sh
+python setup.py py2app
+```
 
 The compiled app will be found in the `dist` folder
 
@@ -43,19 +51,27 @@ The compiled app will be found in the `dist` folder
 
 Clone the repository
 
-`git clone https://github.com/FergusYip/DrinkMoreApp.git`
+```sh
+git clone https://github.com/FergusYip/DrinkMoreApp.git
+```
 
 Enter the directory
 
-`cd DrinkMoreApp`
+```sh
+cd DrinkMoreApp
+```
 
 Install requirements
 
-`pip3 install -r requirements.txt`
+```sh
+pip3 install -r requirements.txt
+```
 
 Run the app
 
-`python3 app.py`
+```sh
+python3 app.py
+```
 
 Note: The settings window will not display the app icon as it is the python interpreter that is running the application.
 
