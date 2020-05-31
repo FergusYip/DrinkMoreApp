@@ -3,33 +3,51 @@
 DrinkMore is a Python 3 app for Mac to remind you to drink more water. When it's open you can choose whether or not to be reminded and change the frequency of which you would like to be reminded.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/menubar_closed.png" width=400/>
+<img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/app_demo/menubar_closed.png" width=400/>
 <br/>
-<img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/menubar_open.png" width=400/>
+<img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/app_demo/menubar_open.png" width=400/>
 <br/>
-<img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/notification.png" width=400/>
+<img src="https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/app_demo/notification.png" width=400/>
 
 </div>
 
 # Running the app
 
-## Precompiled
+## Pre-Bundled
 
-Download the latest precompiled version of the app - [here](https://github.com/FergusYip/DrinkMoreApp/releases)
+Download the latest precompiled version of the app - [here](https://github.com/FergusYip/DrinkMoreApp/releases).
 
-## Compile it yourself
+Note: If you are running MacOS 10.15 or later, it will display a [popup](https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/security_warning/warning.png) and prevent you from opening the app. You can still [open](https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/security_warning/preferences.png) it by going to the General tab of the Security & Privacy section in System Preferences.
+
+## Bundle it yourself
+
+Clone the repository
+
+`git clone https://github.com/FergusYip/DrinkMoreApp.git`
+
+Enter the directory
+
+`cd DrinkMoreApp`
 
 Install requirements
 
 `pip3 install -r requirements.txt`
 
-Build app
+Bundle app
 
 `python setup.py py2app`
 
 The compiled app will be found in the `dist` folder
 
-## Run without compiling
+## Run from source
+
+Clone the repository
+
+`git clone https://github.com/FergusYip/DrinkMoreApp.git`
+
+Enter the directory
+
+`cd DrinkMoreApp`
 
 Install requirements
 
@@ -39,7 +57,7 @@ Run the app
 
 `python3 app.py`
 
-Note that the settings window will not display the app icon as it is the python interpreter that is running the application.
+Note: The settings window will not display the app icon as it is the python interpreter that is running the application.
 
 # Dependencies
 
