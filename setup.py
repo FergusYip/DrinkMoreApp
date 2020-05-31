@@ -8,7 +8,10 @@ OPTIONS = {
     'plist': {
         'LSUIElement': True,
         'NSHumanReadableCopyright': 'Copyright (c) 2020 Wai Lam Fergus Yip',
-        'CFBundleVersion': '1.3.0'
+        'CFBundleGetInfoString':
+        'DrinkMore is a menu bar app for Mac to remind you to drink more water.',
+        'CFBundleVersion': '1.3.0',
+        'CFBundleIdentifier': 'org.pythonmac.DrinkMore'
     },
     'packages': ['rumps'],
 }
