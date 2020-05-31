@@ -15,7 +15,7 @@ DrinkMore is a Python 3 app for Mac to remind you to drink more water. When it's
 
 ## Pre-Bundled
 
-Download the latest precompiled version of the app - [here](https://github.com/FergusYip/DrinkMoreApp/releases).
+Download the latest pre-bundled version of the app - [here](https://github.com/FergusYip/DrinkMoreApp/releases).
 
 Note: If you are running MacOS 10.15 or later, it will display a [popup](https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/security_warning/warning.png) and prevent you from opening the app. You can still [open](https://raw.githubusercontent.com/FergusYip/DrinkMoreApp/master/images/security_warning/preferences.png) it by going to the General tab of the Security & Privacy section in System Preferences.
 
